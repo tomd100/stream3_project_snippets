@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load bootstrap_tags %}
+
+{% block content %}
+    <h2>My Profile</h2>
+    <p>You are logged in as {{ user.email }} </p>
+    <p>User Name: {{ user.username }} </p>
+    <p>First Name: {{ user.first_name }} </p>
+    <p>Last Name: {{ user.last_name }} </p>
+    
+    {% if user.profile.sub_type == 0 %}
+        <p>Subscription Type: You have not purchased a subscription </p>
+    {% elif user.profile.sub_type == 1  %}
+        <p>Subscription Type: Monthly, next reset date: {{ user.profile.sub_start_date }} </p>
+    {% else %}
+        <p>Subscription Type: Annual, next reset date: {{ user.profile.sub_start_date }} </p>
+    {% endif %}
+{% endblock %}

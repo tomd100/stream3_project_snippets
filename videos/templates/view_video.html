@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+
+{% block content %}
+<div class="container" >
+    <h1>Snippet Page</h1>
+        
+    <br><hr><br>
+    
+    <div class="row">
+        <div class="col-md-8" >
+            <h3>{{ video }}</h3>
+            <div id="video_screen" >
+                Video Screen
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <h3>Snippets List</h3>  
+            <div id="snippet_list">
+                {% for snippet in snippets %}
+                    <p><a href='{% url "view_video" video.id snippet.id %}'>{{ snippet.title }}</a></p>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8">
+        <h3>Snippets Controls</h3>  
+            <div id ="snippet_controls">
+                <form method="POST" action="{% url "add_snippet" video.id %}">
+                    
+                    {% csrf_token %}
+                    
+                    <p>Title: {{form.title }}</p>
+                    <p>Start Marker: {{form.start}}  End Marker: {{form.end}}</p>
+                    
+                    <button type="submit" class="btn btn-info">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<br><hr><br>
+
+{% endblock %}

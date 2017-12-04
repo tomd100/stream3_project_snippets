@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+
+{% block content %}
+<div class="container" >
+
+    <h1>Video Page</h1>
+    
+    <br><hr><br>
+    
+    <div class="row col-md-offset-2 col-md-8" >
+        
+        <form id="video_form" method ='POST'>
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <label class="field_input_label">{{ field.label_tag }}</label>
+                <p>{{ field }}</p>
+            {% endfor %}
+            
+            <br>
+            <button type='submit'>Add New Video</button>
+        </form>
+        
+        <br>    
+        
+        <h3>My Videos</h3>
+        
+        <div id="video_list_container">
+            
+            {% for video in videos %}
+            <div class="row" >
+                <p class="video_list_item"><a href="{% url 'view_video' video.id %}">{{ video.title }}</a></p>
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+    
+</div>
+
+<br><hr><br>
+
+{% endblock %}

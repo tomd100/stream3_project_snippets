@@ -1,0 +1,54 @@
+
+/*------------------------------------------------------*/
+/* Video List */
+
+.field_input_label{
+    margin:0px;
+}
+
+.field_input{
+    width: 600px;
+}
+
+#video_list_container{
+    border:solid;
+    border-width: thin;
+}
+
+.video_list_item{
+    margin-left:20px;
+    margin-right:20px;
+}
+
+/*------------------------------------------------------*/
+/* View Video */
+
+#video_screen{
+    border:solid;
+    border-width: thin;
+    min-height: 350px
+}
+
+#snippet_list{
+    border:solid;
+    border-width: thin;
+    max-height: 350px;
+    overflow-y:scroll;
+}
+
+#snippet_controls{
+    border:solid;
+    border-width: thin;
+    height: 150px
+}
+
+/*------------------------------------------------------*/
+/* Snippet Controls */
+
+.snippet_title{
+    width:400px;
+}
+
+.snippet_markers{
+    width:50px;
+}
