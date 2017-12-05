@@ -52,3 +52,17 @@
 .snippet_markers{
     width:50px;
 }
+
+
+a.snippet_links{
+    color: black;
+    text-decoration: none;    
+}
+
+a.snippet_links:link a.snippet_links:visited {
+    color: black;
+}
+
+a.snippet_links:hover{
+    color: red;
+}

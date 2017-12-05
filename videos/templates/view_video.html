@@ -2,10 +2,11 @@
 {% load bootstrap_tags %}
 
 {% block content %}
+
 <div class="container" >
     <h1>Snippet Page</h1>
         
-    <br><hr><br>
+    <hr>
     
     <div class="row">
         <div class="col-md-8" >
@@ -16,12 +17,17 @@
         </div>
         
         <div class="col-md-4">
-            <h3>Snippets List</h3>  
+            <h3>Snippets List</h3>
             <div id="snippet_list">
                 {% for snippet in snippets %}
-                    <p><a href='{% url "view_video" video.id snippet.id %}'>{{ snippet.title }}</a></p>
+                    <p>
+                        <a href='{% url "view_video" video.id snippet.id %}'><i class="fa fa-pencil"></i></a>
+                        <a href='{% url "delete_snippet" video.id snippet.id %}'><i class="fa fa-trash"></i></a>
+                        <a class='snippet_links' href='{% url "view_video" video.id snippet.id %}'>{{ snippet.title }}</i></a>
+                    </p>
                 {% endfor %}
             </div>
+            <a href='{% url "view_video" video.id 0 %}'><i class="fa fa-plus"></i></a>
         </div>
 
     </div>
@@ -30,14 +36,14 @@
         <div class="col-md-8">
         <h3>Snippets Controls</h3>  
             <div id ="snippet_controls">
-                <form method="POST" action="{% url "add_snippet" video.id %}">
+                <form method="POST">
                     
                     {% csrf_token %}
                     
                     <p>Title: {{form.title }}</p>
-                    <p>Start Marker: {{form.start}}  End Marker: {{form.end}}</p>
-                    
-                    <button type="submit" class="btn btn-info">Add</button>
+                    <p>Start Marker: {{form.start}}</p>
+                    <p>End Marker: {{form.end}}</p>
+                    <button type="submit" class="btn btn-info" formaction="{% url "add_snippet" video.id snippet.id %}">Save</button>
                 </form>
             </div>
         </div>

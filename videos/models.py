@@ -1,11 +1,12 @@
 from django.db import models
 from django.core.validators import *
+from django.contrib import auth, messages
 
 # Create your models here.
 #-------------------------------------------------------------------------------
 
 class VideoItem(models.Model):
-    user_id = models.ForeignKey('auth.User')
+    user = models.ForeignKey('auth.User')
     title = models.CharField(max_length=500, blank=False)
     url = models.URLField(max_length=500, blank=False)
     start = models.FloatField(default = 0)
@@ -17,7 +18,7 @@ class VideoItem(models.Model):
 #-------------------------------------------------------------------------------
 
 class SnippetItem(models.Model):
-    video_id = models.ForeignKey(VideoItem, on_delete=models.CASCADE)
+    video = models.ForeignKey(VideoItem, on_delete=models.CASCADE)
     title = models.CharField(max_length=500, blank=False)
     start = models.FloatField(default = 0)
     end = models.FloatField(default = 0)
