@@ -23,7 +23,7 @@
 /*------------------------------------------------------*/
 /* View Video */
 
-#video_screen{
+#player{
     border:solid;
     border-width: thin;
     min-height: 350px

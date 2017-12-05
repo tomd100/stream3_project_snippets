@@ -29,6 +29,11 @@ ALLOWED_HOSTS = [
 'stream3-project-snippets-tomd100.c9users.io',
 ]
 
+# AUTHENTICATION_BACKENDS = [
+#     'django.contrib.auth.backends.ModelBackend',
+#     'accounts.backends.EmailAuth'
+# ]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -66,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -126,3 +132,4 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -9,17 +9,20 @@ from .forms import VideoAddForm, SnippetAddForm
 
 @login_required(login_url="/accounts/login")
 def list_videos(request):
+    videos = VideoItem.objects.filter(user = request.user)
     if request.method == "POST":
         form = VideoAddForm(request.POST)
         if form.is_valid():
-            video = form.save(commit = False);
-            video.user = request.user;
-            video.start = 0;
-            video.end = 0;
-            video.save();
-            return redirect(list_videos)
+            if 1 == 1:
+                video = form.save(commit = False);
+                video.user = request.user;
+                video.start = 0;
+                video.end = 0;
+                video.save();
+                return redirect(list_videos)
+            else:
+                form.add_error(None, "Not a valid YouTube URL")
     else:
-        videos = VideoItem.objects.filter(user = request.user)
         form = VideoAddForm()
     return render(request, "list_videos.html", {'form':form, 'videos':videos})
 

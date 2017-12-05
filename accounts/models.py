@@ -13,7 +13,7 @@ class UserProfile(models.Model):
     sub_type = models.IntegerField(blank=False, default=0)
     sub_start_date=models.DateField(blank=False, default=timezone.now)
     sub_nextreset_date=models.DateField(blank=False, default=timezone.now)
-    
+
 @receiver(post_save, sender=User)   # why are these in separate functions?
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
