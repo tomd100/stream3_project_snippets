@@ -36,6 +36,8 @@ ALLOWED_HOSTS = [
 
 # Application definition
 
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,6 +60,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'snippets.urls'
 
 TEMPLATES = [
@@ -76,6 +79,8 @@ TEMPLATES = [
         },
     },
 ]
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 WSGI_APPLICATION = 'snippets.wsgi.application'
 
@@ -132,4 +137,5 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+

@@ -31,17 +31,22 @@ class SnippetAddForm(forms.ModelForm):
     );
     start = forms.CharField(
         widget = forms.TextInput(
-            attrs = {'class': 'snippet_markers'}
+            attrs = {'class': 'snippet_markers', 'type':'number', 'step':'0.1'}
         )
     );
     end = forms.CharField(
         widget = forms.TextInput(
-            attrs = {'class': 'snippet_markers'}
+            attrs = {'class': 'snippet_markers', 'type':'number', 'step':'0.1'}
+        )
+    );
+    jump = forms.CharField(
+        widget = forms.TextInput(
+            attrs = {'class': 'snippet_markers', 'type':'number', 'step':'0.1'}
         )
     );
     class Meta:
         model = SnippetItem
-        fields = ['title', 'start', 'end']
+        fields = ['title', 'start', 'end', 'jump']
         
 #-------------------------------------------------------------------------------
 

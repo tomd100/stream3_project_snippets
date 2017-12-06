@@ -14,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!--<script src="{% static 'js/test.js' %}"></script>-->
-    
+
 </head>
 <body>
     
@@ -51,22 +51,26 @@
     
     <br><br>
     
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}">
+        <div class="messages">
+            <li>{{ message }}</li>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    
     <div class="container">
         <div class="row">
-            {% block content %} {% endblock %}
+            {% block content %} {% endblock content %}
         </div>
     </div>
 
 </section>
 
-<button onclick=""></button>
+{% block footerjs %}{% endblock footerjs %}
 
-<script>
-
-
-</script>
-
-<script src="{% static 'js/youtube.js' %}"></script>
 
 <!------------------------------------------------------------------------------ main --->    
 </body>

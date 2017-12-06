@@ -29,7 +29,8 @@ def login(request):
                 messages.success(request, "You have successfully logged in")                
                 return redirect(profile)
             else:
-                form.add_error(None, "Your user name or password was not recognised ")
+                messages.success(request, "Your user name or password was not recognised ", extra_tags='danger') 
+                # form.add_error(None, "Your user name or password was not recognised ")
     else:
         form = UserLoginForm();
     return render(request, "login.html", {'form': form})    
