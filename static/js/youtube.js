@@ -14,7 +14,7 @@ function onYouTubeIframeAPIReady() {
     height: '390',
     width: '640',
     videoId: videoid,
-    playerVars: {rel: 0},
+    playerVars: {rel: 0, 'controls': 0},
     events: {
         'onReady': initialize,
         'onStateChange': onPlayerStateChange
@@ -49,7 +49,8 @@ function initialize(){
 
 function updateTimerDisplay(){
     // Update current time text display.
-    $('#current-time').text(formatTime( player.getCurrentTime() ));
+    
+    $('#current-time').text( Number((player.getCurrentTime()).toFixed(0)) );
     $('#duration').text(formatTime( player.getDuration() ));
 }
 
@@ -120,11 +121,10 @@ function playSnippet() {
 
 function jumpBack(){
     var seconds = parseFloat(document.getElementById('id_jump').value)
-    var start = parseFloat(document.getElementById('id_start').value)
     console.log(seconds)
     var current, back;
     current = player.getCurrentTime()
-    if (current - start > seconds) {
+    if (current - seconds >= 0) {
         back = current - seconds;
         player.seekTo(back);
     }
@@ -133,6 +133,23 @@ function jumpBack(){
 function playReset(){
     var start = parseFloat(document.getElementById('id_start').value)
     player.seekTo(start);
+}
+
+function setMarker(type) {
+    // var start = parseFloat(document.getElementById('id_start').value)
+    // var end = parseFloat(document.getElementById('id_end').value)
+    var current = Number((player.getCurrentTime()).toFixed(1));
+    var tag;
+    if (type == 0){
+        tag = document.getElementById('id_start')
+    }else{
+        tag = document.getElementById('id_end')
+    }
+    tag.value = current
+}
+
+function setSpeed(val) {
+    player.setPlaybackRate(val)
 }
 
 // -----------------------------------------------------------------------------

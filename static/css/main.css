@@ -70,3 +70,11 @@ a.snippet_links:link a.snippet_links:visited {
 a.snippet_links:hover{
     color: red;
 }
+
+.set_label{
+    margin-right: 10px;
+}
+
+.set_button{
+    color:blue;
+}

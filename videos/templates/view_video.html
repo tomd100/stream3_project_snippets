@@ -41,23 +41,24 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8">
-            <div class ="snippet_controls">
+        <div class="col-md-8 snippet_controls">
+            <div class ="col-md-10 ">
                 <form method="POST">
                     
                     {% csrf_token %}
                     <p>
-                        <label for="title">Title: </label>
+                        <h5>Title:</h5>
+                        <!--<label for="title">Title: </label>-->
                         {{form.title }}
                     </p>
                     <p>
-                        <label for="start">Start Marker: </label>
-                        {{form.start}}
+                        <label class="set_label" for="start">Start Marker:</label>
+                        <button type="button" class="set_button" onclick="setMarker(0)"><i class="fa fa-arrow-right"></i></button>{{form.start}}
                         
-                        <label for="end">End Marker: </label>
-                        {{form.end}}
+                        <label class="set_label" for="end">End Marker:</label>
+                        <button type="button" class="set_button" onclick="setMarker(1)"><i class="fa fa-arrow-right"></i></button>{{form.end}}
                         
-                        <label for="jump">Jump Back: </label>
+                        <label class="set_label" for="jump">Jump Back:</label>
                         {{form.jump}}
                     </p>
                     <p>
@@ -68,8 +69,17 @@
                     </p>
                 </form>
             </div>
+            <div class ="col-md-2" >
+                <form>
+                    <h5>Speed:</h5>
+                    <input type="radio" name="speed" onclick="setSpeed(1)" checked> Normal<br>
+                    <input type="radio" name="speed" onclick="setSpeed(0.5)"> Slow<br>
+                    <input type="radio" name="speed" onclick="setSpeed(0.25)"> Slower
+                </form>
+            </div>
         </div>
-        <div class="snippet_controls col-md-4">
+        <div class="snippet_controls col-md-2 ">
+            <h5>Player Information</h5>
             <p>
                 <label for="current-time">Current Position: </label>
                 <span id="current-time"></span>
@@ -91,9 +101,16 @@
 <script>
 
     var videoid = '{{yt_id}}';
+    
 
 </script>
 
 <script src="{% static 'js/youtube.js' %}"></script>
     
 {% endblock %}
+
+
+<input type="radio" name="radiosearch" onclick="document.getElementById('searchbox').action='http://www.google.com/search?q=';" checked="checked"/> Web
+<input type="radio" name="radiosearch" onclick="document.getElementById('searchbox').action='http://images.google.com/images?q=';"/>Images
+<input type="radio" name="radiosearch" onclick="document.getElementById('searchbox').action='http://maps.google.com/maps?hl=en&amp;tab=wl?q=';"/>Maps
+<input type="radio" name="radiosearch" onclick="document.getElementById('searchbox').action='http://www.youtube.com/results?q=';"/>Youtube

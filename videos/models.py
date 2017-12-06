@@ -21,8 +21,9 @@ class SnippetItem(models.Model):
     video = models.ForeignKey(VideoItem, on_delete=models.CASCADE)
     title = models.CharField(max_length=500, blank=False)
     start = models.FloatField(default = 0)
-    jump = models.FloatField(default = 2)
     end = models.FloatField(default = 0)
+    jump = models.FloatField(default = 2)
+    
     
     def __str__(self):
         return self.title;
