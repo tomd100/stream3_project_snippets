@@ -4,7 +4,6 @@ from .models import UserProfile
 # Register your models here.
 admin.site.register(UserProfile)
 
-
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 

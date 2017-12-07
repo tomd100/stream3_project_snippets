@@ -1,8 +1,13 @@
-from django.shortcuts import render, redirect, reverse, HttpResponseRedirect
+from django.shortcuts import render, redirect, reverse, HttpResponseRedirect, get_object_or_404
 from django.contrib import auth, messages
-from .forms import UserLoginForm, UserRegistrationForm
+from .forms import UserLoginForm, UserRegistrationForm, SubscriptionForm
 from django.contrib.auth.decorators import login_required
 
+from django.conf import settings
+from django.utils import timezone
+import stripe
+
+stripe.api_key = settings.STRIPE_SECRET
 
 #-------------------------------------------------------------------------------
 
@@ -51,7 +56,7 @@ def register(request):
                     next = request.GET["next"];
                     return HttpResponseRedirect(next);
                 else:
-                    return redirect(login);
+                    return redirect(subscription);
                 
             return redirect(login)      
     else:
@@ -61,8 +66,42 @@ def register(request):
     
 #-------------------------------------------------------------------------------
 
+def subscription(request):
+    if request.method=="POST":
+        form = SubscriptionForm(request.POST)
+        
+        if form.is_valid():
+            subscription = form.save(commit=False)
+            subscription.date = timezone.now()
+            subscription.save()
+
+            try:
+                customer = stripe.Charge.create(
+                    amount= int(400),
+                    currency="EUR",
+                    description=request.user.email,
+                    card=form.cleaned_data['stripe_id'],
+                )
+            except stripe.error.CardError:
+                messages.error(request, "Your card was declined!")
+
+            if customer.paid:
+                messages.error(request, "You have successfully paid")
+                request.session['cart'] = {}
+                return redirect(reverse('all_products'))
+            else:
+                messages.error(request, "Unable to take payment")
+        else:
+            print(form.errors)
+            messages.error(request, "We were unable to take a payment with that card!")
+    else:
+        form = SubscriptionForm()
+    return render(request, "subscription.html", {'form': form})
+    
+#------------------------------------------------------------------------------- 
+
 @login_required(login_url="/accounts/login")
 def profile(request):
     return render(request, "profile.html");
 
-#-------------------------------------------------------------------------------    
+#------------------------------------------------------------------------------- 

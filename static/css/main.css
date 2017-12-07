@@ -1,4 +1,11 @@
 
+body{
+    margin-top: 65px;
+}
+
+#message_div{
+    position: absolute;
+}
 /*------------------------------------------------------*/
 /* Video List */
 

@@ -5,14 +5,18 @@
 
 <br><br><br><br>
 
-<form method="POST">
-
-    {% csrf_token %}
-    
-    {{ form |as_bootstrap }}
-    
-    <button type="submit">Login</button>
-</form>
-
+<div class="container" >
+    <div class="row">
+        <form method="POST">
+        
+            {% csrf_token %}
+            
+            {{ form |as_bootstrap }}
+            
+            <button type="submit">Login</button>
+        </form>
+    </div>    
+</div>
+<p><a href="{% url 'password_reset' %}">Forgot my password</a></p>
 
 {% endblock %}
