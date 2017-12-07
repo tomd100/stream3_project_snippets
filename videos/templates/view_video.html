@@ -41,8 +41,8 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8 snippet_controls">
-            <div class ="col-md-10 ">
+        <div class="col-md-10 snippet_controls">
+            <div class ="col-md-8">
                 <form method="POST">
                     
                     {% csrf_token %}
@@ -65,10 +65,11 @@
                         <button type="submit" class="btn btn-info" formaction="{% url "add_snippet" video.id snippet.id %}">Save</button>
                         <button type="button"  id="play_btn" class="btn btn-info" onclick="playSnippet()">Play</button>
                         <button type="button" class="btn btn-info" onclick="jumpBack()">Jump Back</button>
-                        <button type="button" class="btn btn-info" onclick="playReset()">Reset</button>
+                        <button type="button" class="btn btn-info" onclick="playRestart()">Restart</button>
                     </p>
                 </form>
             </div>
+
             <div class ="col-md-2" >
                 <form>
                     <h5>Speed:</h5>
@@ -77,9 +78,17 @@
                     <input type="radio" name="speed" onclick="setSpeed(0.25)"> Slower
                 </form>
             </div>
+
+            <div class ="col-md-2" >
+                <form>
+                    <h5>Loop Snippet:</h5>
+                    <input type="checkbox" id='snippet_loop' name="loop"  unchecked> Loop<br>
+                </form>
+            </div>
+
         </div>
         <div class="snippet_controls col-md-2 ">
-            <h5>Player Information</h5>
+            <h5>Player Information:</h5>
             <p>
                 <label for="current-time">Current Position: </label>
                 <span id="current-time"></span>

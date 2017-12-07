@@ -1,4 +1,7 @@
 
+// -----------------------------------------------------------------------------
+// YouTube JS
+
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
     
@@ -28,6 +31,8 @@ function onPlayerReady(event) {
     event.target.stopVideo
 }
 
+// -----------------------------------------------------------------------------
+
 var time_update_interval
 function initialize(){
 
@@ -41,10 +46,27 @@ function initialize(){
     // Start interval to update elapsed time display and
     // the elapsed part of the progress bar every second.
     time_update_interval = setInterval(function () {
+        checkLoopStatus();
         updateTimerDisplay();
         updateProgressBar();
     }, 1000)
 
+}
+
+function checkLoopStatus() {
+    var loop = document.getElementById('snippet_loop').checked;
+    var start = parseFloat(document.getElementById('id_start').value);
+    var end = parseFloat(document.getElementById('id_end').value);
+    var current = (player.getCurrentTime());
+    
+    if (loop) {
+        if (end <= start) {
+            // error message
+            document.getElementById('snippet_loop').checked = false
+        } else if (current >= end){
+            player.seekTo(start)
+        }
+    }
 }
 
 function updateTimerDisplay(){
@@ -130,7 +152,7 @@ function jumpBack(){
     }
 }    
 
-function playReset(){
+function playRestart(){
     var start = parseFloat(document.getElementById('id_start').value)
     player.seekTo(start);
 }
