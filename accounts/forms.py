@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.forms import formset_factory
+from .models import Subscription, Order, OrderLineItem
 
 #-------------------------------------------------------------------------------
 
@@ -50,7 +52,7 @@ class UserRegistrationForm(UserCreationForm):
         
 #-------------------------------------------------------------------------------
 
-class SubscriptionForm(forms.Form):
+class MakePaymentForm(forms.Form):
 
     MONTH_CHOICES = [(i, i,) for i in range(1, 13)]
     YEAR_CHOICES = [(i, i,) for i in range(2015, 2036)]
@@ -62,3 +64,10 @@ class SubscriptionForm(forms.Form):
     stripe_id = forms.CharField(widget=forms.HiddenInput)
     
 #-------------------------------------------------------------------------------
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ('full_name', 'phone_number', 'country', 'postcode', 'town_or_city', 'street_address_1', 'street_address_2', 'county')
+
+#-------------------------------------------------------------------------------        

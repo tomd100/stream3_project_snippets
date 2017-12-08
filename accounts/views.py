@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, reverse, HttpResponseRedirect, get_object_or_404
 from django.contrib import auth, messages
-from .forms import UserLoginForm, UserRegistrationForm, SubscriptionForm
+from .forms import UserLoginForm, UserRegistrationForm, MakePaymentForm, OrderForm
 from django.contrib.auth.decorators import login_required
+from .models import Subscription
 
 from django.conf import settings
 from django.utils import timezone
@@ -56,7 +57,7 @@ def register(request):
                     next = request.GET["next"];
                     return HttpResponseRedirect(next);
                 else:
-                    return redirect(subscription);
+                    return redirect(login);
                 
             return redirect(login)      
     else:
@@ -66,21 +67,36 @@ def register(request):
     
 #-------------------------------------------------------------------------------
 
-def subscription(request):
+
+@login_required(login_url="/accounts/login")
+def checkout(request):
     if request.method=="POST":
-        form = SubscriptionForm(request.POST)
+        order_form = OrderForm(request.POST)
+        payment_form = MakePaymentForm(request.POST)
         
-        if form.is_valid():
-            subscription = form.save(commit=False)
-            subscription.date = timezone.now()
-            subscription.save()
+        if order_form.is_valid() and payment_form.is_valid():
+            order = order_form.save(commit=False)
+            order.date = timezone.now()
+            order.save()
+
+            cart = request.session.get('cart', {})
+            total = 0
+            # for id, quantity in cart.items():
+            #     subscription = get_object_or_404(Subscription, pk=id)
+            #     total += quantity * product.price
+            #     order_line_item = OrderLineItem(
+            #         order = order,
+            #         product = product,
+            #         quantity = quantity
+            #         )
+            #     order_line_item.save()
 
             try:
                 customer = stripe.Charge.create(
-                    amount= int(400),
+                    amount= int(total * 100),
                     currency="EUR",
                     description=request.user.email,
-                    card=form.cleaned_data['stripe_id'],
+                    card=payment_form.cleaned_data['stripe_id'],
                 )
             except stripe.error.CardError:
                 messages.error(request, "Your card was declined!")
@@ -92,11 +108,13 @@ def subscription(request):
             else:
                 messages.error(request, "Unable to take payment")
         else:
-            print(form.errors)
+            print(payment_form.errors)
             messages.error(request, "We were unable to take a payment with that card!")
     else:
-        form = SubscriptionForm()
-    return render(request, "subscription.html", {'form': form})
+        payment_form = MakePaymentForm()
+        order_form = OrderForm()
+
+    return render(request, "checkout.html", {'order_form': order_form, 'payment_form': payment_form, 'publishable': settings.STRIPE_PUBLISHABLE })
     
 #------------------------------------------------------------------------------- 
 
