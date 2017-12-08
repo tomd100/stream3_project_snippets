@@ -3,7 +3,6 @@
 {% load bootstrap_tags %} # used to format the DJANG fomrs
 
 {% block head_js %}
-
 <script src="https://js.stripe.com/v2/" type="text/javascript"></script>
 <script type="text/javascript">
     //<![CDATA[
@@ -16,26 +15,15 @@
 
 
 {% block content %}
-    
-<form role="form" method="post" id="payment-form" action="{% url 'checkout' %}">
 
-  <legend>Subscription Type</legend>
-  
-  {% csrf_token %}
-  <div class="form-group col-md-12">
-    
-    <p id='sub_selection'>{{ subscription_form.sub_type }}</p>
+{% csrf_token %}
 
-    <div>
-      <p hidden id='sub_selection_para'></p>
-      <p hidden id='sub_selection_button'><input id='sub_selection_button' class='btn btn-primary' id='submit_payment_btn' name='commit' type='submit' value='Continue'></p>
-    </div>
+<div id="select">
+  {% include '_select.html' %}
+</div>
 
-    
-  </div>
+<div hidden id="checkout">
+  {% include '_checkout.html' %}
+</div>
 
-</form>
-    
-
-<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

@@ -20,4 +20,12 @@ function subText() {
     }
 }
 
+function showCheckout(){
+    var select = document.getElementById('select');
+    var checkout = document.getElementById('checkout');
+    select.style.display = 'none'
+    checkout.style.display = 'block'
+}
+
 // -----------------------------------------------------------------------------
+
