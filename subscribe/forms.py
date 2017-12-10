@@ -3,23 +3,26 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.forms import formset_factory, ModelChoiceField
-from .models import SubscriptionType, Order, SubscriptionOrdered
+from .models import Subscription, Order, OrderLineItem
+from accounts.models import UserProfile
+
 
 #-------------------------------------------------------------------------------        
 
-class YouNewChoiceField(ModelChoiceField):
+class SubscriptionChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
-        return "%s -- €%s / %s" % (obj.description, obj.price, obj.type)
+        return "%s -- €%s / %s" % (obj.description, obj.price, obj.name)
+        # return "%s" % (obj.type)
 
-class SubscriptionForm(forms.ModelForm):
-    sub_type = YouNewChoiceField(queryset=SubscriptionType.objects.all(),
+class SubscriptionForm(forms.Form):
+    select_sub = SubscriptionChoiceField(queryset=Subscription.objects.all(),
         widget = forms.Select(attrs = {'onchange' : "subText();"}))
-    
-    #  reciept=forms.ChoiceField(reciept_types, widget = forms.Select(attrs = {'onchange' : "myFunction();"}))
+    name = forms.CharField(required=True, max_length=20, initial='none')
     
     class Meta:
-        model = SubscriptionType
-        exclude = ['type', 'description', 'price']
+        model = Subscription
+        fields = ['name']
+        exclude = ['description', 'price']
 
 #-------------------------------------------------------------------------------
 

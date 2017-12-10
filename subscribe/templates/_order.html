@@ -1,0 +1,27 @@
+
+
+
+<legend>Subscription Type</legend>
+
+<div class="form-group col-md-12">
+    <p id='sub_selection'>{{ subscription_form.select_sub }}</p>
+    
+    <form id="subscription_form" method = 'post' action ="{% url 'checkout' %}">
+    
+        {% csrf_token %}
+        
+        <p hidden id='sub_name'>{{ subscription_form.name }}</p>
+        
+        <div>
+            <p id='sub_selection_para'>None</p>
+            
+            <!--<p hidden id='sub_selection_button'><input id='sub_selection_button' class='btn btn-primary' id='submit_payment_btn' name='commit' type='submit' value='Continue'></p>-->
+            <!--<button id='sub_selection_button' type='button' class='btn btn-primary' onclick='showCheckout()'>Continue</button>-->
+            <button id='sub_selection_button' type='submit' class='btn btn-primary'>Continue</button>
+        </div>
+    </form>
+</div>
+
+
+
+    

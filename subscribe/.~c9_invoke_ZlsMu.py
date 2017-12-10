@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 #-------------------------------------------------------------------------------        
 
 class Subscription(models.Model):
-    name = models.CharField(max_length=50, default='')
+    type = models.CharField(max_length=50, default='')
     description = models.CharField(max_length=200, default='')
     price = models.DecimalField(max_digits=6, decimal_places=2)
 
@@ -32,12 +32,11 @@ class Order(models.Model):
 
 #-------------------------------------------------------------------------------        
 
-class OrderLineItem(models.Model):
+class SubscriptionOrdered(models.Model):
     order = models.ForeignKey(Order, null=False)
-    subscription = models.ForeignKey(Subscription, null=False)
-    quantity = models.IntegerField(blank=False)
-    
+    subscription = models.ForeignKey(SubscriptionType, null=False)
+
     def __str__(self):
-        return "{0} {1} @ {2}".format(self.quantity, self.subscription.name, self.subscription.price)
-        
+        return "{0} @ {1}".format(self.subscription.name, self.subscription.price)
+
 #-------------------------------------------------------------------------------        
