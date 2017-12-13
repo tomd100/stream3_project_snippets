@@ -14,12 +14,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!--<script src="{% static 'js/test.js' %}"></script>-->
-
-
 </head>
 <body>
     
 <!------------------------------------------------------------------------------ navbar --->
+
 <section>
     <nav class="navbar navbar-masthead navbar-default navbar-fixed-top">
         <div class="container">
@@ -51,7 +50,7 @@
 <!------------------------------------------------------------------------------ main --->
 <section>
 
-    {% if messages %}
+{% if messages %}
     {% for message in messages %}
     <div id="message_div" class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}">
         <div class="messages">
@@ -59,19 +58,46 @@
         </div>
     </div>
     {% endfor %}
-    {% endif %}
+{% endif %}
     
-    <div class="container">
-        <div class="row">
-            {% block content %} {% endblock content %}
-        </div>
+</section>
+<!----------------------------------------------------------------------------->    
+<section>
+ 
+<br><br><br>
+
+<div class="container">
+    <div class="row">
+        
+    <h1>{% block title %} {% endblock %}</h1>
+    <hr>
+    
     </div>
+</div>
+
+<div class="container">
+    <div class="row">
+            
+    {% block content %} {% endblock %}
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+
+    <br><br><hr>
+    
+    </div>
+</div>
 
 </section>
 
+
+<!----------------------------------------------------------------------------- footer--->        
+
 {% block footerjs %}{% endblock footerjs %}
 
-<!------------------------------------------------------------------------------ main --->    
 <script src="{% static 'js/main.js' %}"></script>
 
 </body>

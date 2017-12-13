@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+{% load staticfiles %}
+
+
+{% block title %}
+
+Snippet Page
+
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-8" >
+    <h3>{{ video }}</h3>
+    <div id="player"></div>
+</div>
+        
+<div class=" col-md-4">
+    <h3>Snippets List</h3>
+    <div id = 'snippet_list_container'>
+        <div class = 'list_item'>
+            {% for snippet in snippets %}
+                <p>
+                    <a href='{% url "view_video" video.id snippet.id %}'><i class="fa fa-pencil"></i></a>
+                    <a href='{% url "delete_snippet" video.id snippet.id %}'><i class="fa fa-trash"></i></a>
+                    <a class='snippet_links' href='{% url "view_video" video.id snippet.id %}'>{{ snippet.title }}</i></a>
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+    <a href='{% url "view_video" video.id 0 %}'><i class="fa fa-plus"></i></a>
+</div>
+
+
+<div class="row">
+    <div class="col-md-8">
+        <h4>Progress</h4>
+        
+        <input type="range" id="progress-bar" value="0">
+        
+        <h3>Snippet Controls</h3> 
+    </div>
+</div>
+
+<div class="col-md-10 snippet_controls">
+    <div class ="col-md-8">
+        <form method="POST">
+            
+            {% csrf_token %}
+            <p>
+                <h5>Title:</h5>
+                <!--<label for="title">Title: </label>-->
+                {{form.title }}
+            </p>
+            <p>
+                <label class="set_label" for="start">Start Marker:</label>
+                <button type="button" class="btn_plus set_button" onclick="setMarker(0)"><i class="fa fa-plus"></i></button>{{form.start}}
+                
+                <label class="set_label" for="end">End Marker:</label>
+                <button type="button" class="btn_plus set_button" onclick="setMarker(1)"><i class="fa fa-plus"></i></button>{{form.end}}
+                
+                <label class="set_label" for="jump">Jump Back:</label>
+                {{form.jump}}
+            </p>
+            <p>
+                <button type="submit" class="btn btn-info" formaction="{% url 'add_snippet' video.id snippet.id %}">Save</button>
+                <button type="button"  id="play_btn" class="btn btn-info" onclick="playSnippet()">Play</button>
+                <button type="button" class="btn btn-info" onclick="jumpBack()">Jump Back</button>
+                <button type="button" class="btn btn-info" onclick="playRestart()">Restart</button>
+            </p>
+        </form>
+    </div>
+
+    <div class ="col-md-2" >
+        <form>
+            <h5>Speed:</h5>
+            <input type="radio" name="speed" onclick="setSpeed(1)" checked> Normal<br>
+            <input type="radio" name="speed" onclick="setSpeed(0.5)"> Slow<br>
+            <input type="radio" name="speed" onclick="setSpeed(0.25)"> Slower
+        </form>
+    </div>
+
+    <div class ="col-md-2" >
+        <form>
+            <h5>Loop Snippet:</h5>
+            <input type="checkbox" id='snippet_loop' name="loop"  unchecked> Loop<br>
+        </form>
+    </div>
+
+</div>
+
+<div class="snippet_controls col-md-2 ">
+    <h5>Player Information:</h5>
+    <p>
+        <label for="current-time">Current Position: </label>
+        <span id="current-time"></span>
+    </p>
+    <p>    
+        <label for="duration">Video Length: </label>
+        <span id="duration"></span>
+    </p>
+</div>
+
+
+{% endblock %}
+
+{% block footerjs %}
+
+<script>
+
+    var videoid = '{{yt_id}}';
+    
+
+</script>
+
+<script src="{% static 'js/youtube.js' %}"></script>
+    
+{% endblock %}
+

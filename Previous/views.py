@@ -2,21 +2,18 @@ from django.shortcuts import render, redirect, reverse, HttpResponseRedirect, ge
 from django.contrib import auth, messages
 from .forms import SubscriptionForm, MakePaymentForm, OrderForm
 from django.contrib.auth.decorators import login_required
-from .models import Subscription
 
 from django.conf import settings
 from django.utils import timezone
-
 # import stripe
+
 # stripe.api_key = settings.STRIPE_SECRET
 #------------------------------------------------------------------------------- 
 
 @login_required(login_url="/accounts/login")
 def subscribe(request):
-    order_form = OrderForm()
-    payment_form = MakePaymentForm()
     subscription_form = SubscriptionForm()
-    return render(request, 'subscription.html', {'subscription_form': subscription_form, 'payment_form': payment_form, 'order_form' :order_form  });
+    return render(request, 'subscription.html', {'subscription_form': subscription_form });
     
 #------------------------------------------------------------------------------- 
 
@@ -24,19 +21,24 @@ def subscribe(request):
 # Needs to include the correct ID of the subscription
 
 def add_to_cart(request):
-
-    sub_type = request.POST.get('type')
-    print(sub_type)
-    if sub_type == 'none':
-        messages.success(request, "Please select a subscription type", extra_tags='danger') 
-        return redirect(subscribe)
-    else:
-        # cart = request.session.get('cart', {})
     
-        # cart = {}
-        # cart['sub_type'] = sub_type
-        # request.session['cart'] = cart   
-        return redirect(checkout)
+    print('add_to_cart');
+    
+    sub_name = request.POST.get('name')
+    print(sub_name)
+    
+    cart = request.session.get('cart', {})
+    
+    if len(cart) > 0:
+        cart = {};
+        
+    cart[id] = cart.get(id, sub_name)
+    
+    print("here")
+    print(sub_name)
+    
+    request.session['cart'] = cart    
+    return redirect(subscribe)
 
 #------------------------------------------------------------------------------- 
 
@@ -45,13 +47,13 @@ def checkout(request):
     print('checkout')
     if request.method=="POST":
         print("if")
-        order_form = OrderForm(request.POST)
-        payment_form = MakePaymentForm(request.POST)
+        # order_form = OrderForm(request.POST)
+        # payment_form = MakePaymentForm(request.POST)
         
         # if order_form.is_valid() and payment_form.is_valid():
         #     order = order_form.save(commit=False)
         #     order.date = timezone.now()
-            # order.save()
+        #     order.save()
 
             # cart = request.session.get('cart', {})
             # total = 0
@@ -86,11 +88,11 @@ def checkout(request):
             # messages.success(request, 'We were unable to take a payment with that card!', extra_tags='danger')
     else:
         print('else')
-        payment_form = MakePaymentForm()
-        order_form = OrderForm()
+        # payment_form = MakePaymentForm()
+        # order_form = OrderForm()
 
     # return render(request, 'subscription.html', {'subscription_form': subscription_form, 'order_form': order_form, 'payment_form': payment_form, 'publishable': settings.STRIPE_PUBLISHABLE })
     # return render(request, 'subscription.html', {'subscription_form': subscription_form })
-    return render(request, 'subscription.html', {'payment_form': payment_form, 'order_form' :order_form });
+    return redirect(subscribe)
     
 #------------------------------------------------------------------------------- 

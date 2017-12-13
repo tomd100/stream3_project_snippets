@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 {% load bootstrap_tags %}
 
+
+{% block title %}
+
+Profile Page
+
+{% endblock %}
+
 {% block content %}
 
-<br><br><br><br>
+<h3>My Profile</h3>
 
-<h2>My Profile</h2>
 <p>You are logged in as {{ user.email }} </p>
 <p>User Name: {{ user.username }} </p>
 <p>First Name: {{ user.first_name }} </p>
@@ -18,4 +24,5 @@
 {% else %}
     <p>Subscription Type: Annual, next reset date: {{ user.profile.sub_start_date }} </p>
 {% endif %}
+
 {% endblock %}

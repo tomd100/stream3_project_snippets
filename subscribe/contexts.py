@@ -3,19 +3,21 @@ from .models import Subscription
 
 
 def cart_contents(request):
-    """
-    Ensures that the cart contents are available when rendering every page. 
-    """
-
-    cart = request.session.get('cart', {})
     
-    cart_items = []
-    total = 0
-    subscription_count = 0
-    for id, quantity in cart.items():
-        subscription = get_object_or_404(Subscription, pk=id)
-        total += quantity * Subscription.price
-        product_count += quantity
-        cart_items.append({'id': id, 'quantity': quantity, 'subscription': subscription})
+    # del request.session['cart']
+    # for key, value in request.session.items(): print('{} => {}'.format(key, value))
+    
+    sub_type = '';
+    sub_desc = '';
+    sub_price = 0;
+    
+    cart = request.session.get('cart', {})
 
-    return { 'cart_items': cart_items, 'total': total, 'subscription_count': subscription_count }
+    if cart:
+        sub_type = cart['sub_type'];
+
+        sub_obj = Subscription.objects.get(type = sub_type)
+        sub_desc = sub_obj.description
+        sub_price = sub_obj.price;
+    
+    return { 'sub_type': sub_type, 'sub_desc': sub_desc, 'sub_price': sub_price }

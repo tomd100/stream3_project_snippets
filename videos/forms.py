@@ -1,5 +1,5 @@
 from django import forms
-from .models import VideoItem, SnippetItem
+from .models import VideoItem
 
 #-------------------------------------------------------------------------------
 
@@ -20,34 +20,6 @@ class VideoAddForm(forms.ModelForm):
         model = VideoItem
         fields = ['title', 'url']
 
-
-#-------------------------------------------------------------------------------
-
-class SnippetAddForm(forms.ModelForm):
-    title = forms.CharField(
-        widget = forms.TextInput(
-            attrs = {'class': 'snippet_title'}
-        )
-    );
-    start = forms.CharField(
-        widget = forms.TextInput(
-            attrs = {'class': 'snippet_markers', 'type':'number', 'step':'0.1'}
-        )
-    );
-    end = forms.CharField(
-        widget = forms.TextInput(
-            attrs = {'class': 'snippet_markers', 'type':'number', 'step':'0.1'}
-        )
-    );
-    jump = forms.CharField(
-        widget = forms.TextInput(
-            attrs = {'class': 'snippet_markers', 'type':'number', 'step':'0.1'}
-        )
-    );
-    class Meta:
-        model = SnippetItem
-        fields = ['title', 'start', 'end', 'jump']
-        
 #-------------------------------------------------------------------------------
 
 # form = JournalForm(initial={'tank': 123})

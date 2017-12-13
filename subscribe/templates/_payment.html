@@ -1,12 +1,9 @@
-{% extends "base.html" %}
-{% load bootstrap_tags %} # used to format the DJANG fomrs
+{% load bootstrap_tags %} 
 
-{% block content %}
+<h3>Payment Details</h3>
 
-<form role="form" method="post" id="payment-form" action="">
+<form role="form" method="post" id="payment-form">
 
-  <legend>Payment Details</legend>
-  
   <div id="credit-card-errors" style="display:none">
     <div class="alert-message block-message error" id="stripe-error-message"></div>
   </div>
@@ -20,10 +17,10 @@
   </div>
   
   {% csrf_token %}
+  
   <div class="form-group col-md-12">
     <input class="btn btn-primary" id="submit_payment_btn" name="commit" type="submit" value="Submit Payment">
   </div>
 
 </form>
 
-{% endblock %}

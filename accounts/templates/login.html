@@ -1,22 +1,24 @@
 {% extends "base.html" %}
 {% load bootstrap_tags %}
 
+{% block title %}
+
+Login Page
+
+{% endblock %}
+
 {% block content %}
 
-<br><br><br><br>
+<h3>Please login below:</h3>
 
-<div class="container" >
-    <div class="row">
-        <form method="POST">
-        
-            {% csrf_token %}
-            
-            {{ form |as_bootstrap }}
-            
-            <button type="submit">Login</button>
-        </form>
-    </div>    
-</div>
-<p><a href="{% url 'password_reset' %}">Forgot my password</a></p>
+<form method="POST">
+
+    {% csrf_token %}
+    
+    {{ form |as_bootstrap }}
+    
+    <p><a href="{% url 'password_reset' %}">Forgot my password</a></p>    
+    <button type="submit">Login</button>
+</form>
 
 {% endblock %}

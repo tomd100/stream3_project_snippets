@@ -1,3 +1,15 @@
+/*------------------------------------------------------*/
+/* Opening Page */
+
+#opening-page{
+    height:600px;
+    border:solid;
+    background-image: url("../images/pablo (1).png");
+    background-size: cover;
+    background-color: #cccccc;
+}
+
+/*------------------------------------------------------*/
 
 body{
     margin-top: 65px;
@@ -14,12 +26,14 @@ body{
 }
 
 .field_input{
-    width: 600px;
+    width: 300px;
 }
 
 #video_list_container{
     border:solid;
     border-width: thin;
+    max-height: 350px;
+    overflow-y:scroll;
 }
 
 .video_list_item{
@@ -37,11 +51,17 @@ body{
     width: 750px;
 }
 
-#snippet_list{
+#snippet_list_container{
     border:solid;
     border-width: thin;
     max-height: 350px;
     overflow-y:scroll;
+}
+
+
+.list_item{
+    margin-left:20px;
+    margin-right:20px;
 }
 
 .snippet_controls{
@@ -51,6 +71,15 @@ body{
     /*padding:10px;*/
     /*margin-left:10px;*/
     /*margin-right:0px;*/
+}
+
+.btn_plus{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
 }
 
 /*------------------------------------------------------*/

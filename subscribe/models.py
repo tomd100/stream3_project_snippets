@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 #-------------------------------------------------------------------------------        
 
 class Subscription(models.Model):
-    name = models.CharField(max_length=50, default='')
+    type = models.CharField(max_length=50, default='')
     description = models.CharField(max_length=200, default='')
     price = models.DecimalField(max_digits=6, decimal_places=2)
 

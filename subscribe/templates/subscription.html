@@ -1,33 +1,30 @@
 {% extends "base.html" %}
 {% load static from staticfiles %}
-{% load bootstrap_tags %} # used to format the DJANG fomrs
+{% load bootstrap_tags %} 
 
-{% block head_js %}
-<script src="https://js.stripe.com/v2/" type="text/javascript"></script>
-<script type="text/javascript">
-    //<![CDATA[
-    Stripe.publishableKey = '{{ publishable }}';
-    //]]>
-</script>
-<script type="text/javascript" src="{% static 'js/stripe.js' %}"></script>
+
+{% block title %}
+
+Subscription Page
 
 {% endblock %}
 
 
 {% block content %}
 
-<br><br><br><br>
-
 <div id="select">
   {% include '_order.html' %}
+</div>
+
+<div hidden id="checkout">
+  {% include '_payment.html' %}
 </div>
 
 
 {% endblock %}
 
 <script>
+
   // temp js for populating the fields for tesing
-  
-  
   
 </script>

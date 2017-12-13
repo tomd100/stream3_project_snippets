@@ -1,45 +1,49 @@
 {% extends 'base.html' %}
 {% load bootstrap_tags %}
 
-{% block content %}
+{% block title %}
 
-<div class="container" >
-
-    <h1>Video Page</h1>
-    
-    <hr><br><br>
-    
-    <div class="row col-md-offset-2 col-md-8" >
-        
-        <form id="video_form" method ='POST'>
-            {% csrf_token %}
-            
-            {% for field in form %}
-                <label class="field_input_label">{{ field.label_tag }}</label>
-                <p>{{ field }}</p>
-            {% endfor %}
-            
-            <br>
-            <button type='submit'>Add New Video</button>
-        </form>
-        
-        <br>    
-        
-        <h3>My Videos</h3>
-        
-        <div id="video_list_container">
-            
-            {% for video in videos %}
-            <div class="row" >
-                <p class="video_list_item"><a href="{% url 'view_video' video.id %}">{{ video.title }}</a></p>
-            </div>
-            {% endfor %}
-            
-        </div>
-    </div>
-    
-</div>
-
-<br><hr><br>
+Video Page
 
 {% endblock %}
+
+
+
+{% block content %}
+
+<div class='col-md-6'>
+    <h3>Add Video</h3>
+
+    <form id="video_form" method ='POST' action = "{% url 'add_video' video.id %}">
+        {% csrf_token %}
+        
+        {% for field in form %}
+            <label class="field_input_label">{{ field.label_tag }}</label>
+            <p>{{ field }}</p>
+        {% endfor %}
+        
+        <br>
+        <button type='submit'>Save</button>
+    </form>
+
+</div>
+
+<div class='col-md-6'>
+    <h3>Video List</h3>
+    
+    <div id = 'video_list_container'>
+        <div class = 'list_item'>
+            {% for video in videos %}
+                <p>
+                    <a href='{% url "list_videos" video.id %}'><i class="fa fa-pencil"></i></a>
+                    <a href='{% url "delete_video" video.id %}'><i class="fa fa-trash"></i></a>
+                    <a class='video_links' href='{% url "view_video" video.id %}'>{{ video.title }}</i></a>
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+    <a href='{% url "list_videos" 0 %}'><i class="fa fa-plus"></i></a>
+</div>
+
+{% endblock %}
+

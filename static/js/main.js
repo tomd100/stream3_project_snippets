@@ -1,4 +1,11 @@
 // -----------------------------------------------------------------------------
+// video categories
+
+
+
+
+
+// -----------------------------------------------------------------------------
 // subscription form
 
 function subText() {
@@ -12,19 +19,16 @@ function subText() {
     var selected_text = sub_selected.options[sub_selected.selectedIndex].text;
     
     var sub_form = document.forms['subscription_form'];
- 
+    
+    console.log(selected_text)
+    
     if (selected_value != '') {
-        console.log(sub_form.elements['name'].value)
-        sub_form.elements['name'].value = 'Month';
-        console.log(sub_form.elements['name'].value)
-        
-        sub_para.innerHTML = selected_text
-        sub_para.style.display = 'block';
-        // sub_button.style.display = 'block';
+        sub_form.elements['type'].value = 'Month';
     }else{
-        sub_para.style.display = 'none';
-        // sub_button.style.display = 'none';
+        console.log('none...')
+        sub_form.elements['type'].value = 'none';
     }
+    return
 }
 
 function showCheckout(){
@@ -32,6 +36,7 @@ function showCheckout(){
     var checkout = document.getElementById('checkout');
     select.style.display = 'none';
     checkout.style.display = 'block';
+    return
 }
 
 // -----------------------------------------------------------------------------
